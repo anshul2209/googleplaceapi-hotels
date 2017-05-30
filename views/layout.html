@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHliDpDvKcD3IPBliFZjdij6d9wezNKR4&libraries=places"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <style type="text/css">
+      .head {
+        background: #F1F1F1;
+        font-weight: bold;
+        font-size: 14px;
+        color: black !important;
+      }
+      .hotel{
+        font-size: 14px;
+      }
+      .hotelname{
+        font-weight: bold;
+        color: black !important;
+      }
+      .head:hover {
+        background: #F1F1F1 !important;
+      }
+      #searchInput{
+        width: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+  <div class="container">
+    <h1> Hi! Make the Search Below</h1>
+    <input id="searchInput" class="controls" type="text" placeholder="Enter a location">
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      function initMap() {
+        var input = document.getElementById('searchInput');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+      };
+      setTimeout(function() {
+        $(".pac-container").append('<div id="areasearch" class="pac-item areasearch head" onclick="alert(\'make onclick\')"><span>Locations</span></div>');
+      }, 500);
+      initMap();
+    });
+  </script>
+  <script type="text/javascript">
+    var timeoutId = 0;
+    function getHotels(val) {
+      var searchText = val;
+      $.ajax({
+        url: '/api/gethotels',
+        data: {
+          'data': searchText
+        },
+        success: function(data) {
+          var head = '<div id="newelement" class="pac-item areasearch elem head">Hotels</span></div>';
+          $(".pac-container").append(head);
+          if (data.hotels.length > 0) {
+            data.hotels.forEach(function(hotel) {
+              var str = '<div id="newelement" class="pac-item areasearch elem hotel"><span class="pac-icon pac-icon-areas"></span><span class="hotelname">' + hotel.name + '</span> ' + hotel.address + ' <span></span></div>';
+              $(".pac-container").append(str);
+            });
+          } else {
+            $(".pac-container").append('<div id="newelement" class="pac-item areasearch elem"><span class="pac-icon pac-icon-areas"></span><span>' + 'No Results Found' + '</span></div>');
+          }
+        }
+      });
+    };
+    $('#searchInput').bind('change keydown keyup', function() {
+      $('.elem').remove();
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(function() {
+        getHotels($('#searchInput').val());
+      }, 500);
+    });
+  </script>
+{% endblock %}
